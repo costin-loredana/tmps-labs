@@ -7,8 +7,11 @@ import java.util.Scanner;
 
 import lab1.domain.factory.Enemy;
 import lab1.domain.factory.EnemyFactory;
+import lab1.domain.factory.FactoryInitializer;
 import lab1.domain.models.Player;
+import lab1.domain.models.PlayerBuilder;
 import lab1.domain.models.PlayerDirector;
+import lab1.domain.models.IBuilder;
 
 public class GameManager {
     private static volatile GameManager instance;
@@ -43,7 +46,8 @@ public class GameManager {
         String playerClass = CLASS_OPTIONS.getOrDefault(choice, "Adventurer");
 
         PlayerDirector director = new PlayerDirector();
-        Player player = director.createDefault(name, playerClass);
+        IBuilder builder = new PlayerBuilder();
+        Player player = director.createDefault(builder, name, playerClass);
 
         System.out.println("\nPlayer created:");
         System.out.println(player);
@@ -53,6 +57,8 @@ public class GameManager {
         System.out.print("> ");
         int enemyChoice = scanner.nextInt();
         scanner.nextLine();
+
+        FactoryInitializer.initializeFactories();
 
         String enemyType = ENEMY_OPTIONS.getOrDefault(enemyChoice, "Goblin");
         System.out.println("\nGame setup complete!");

@@ -79,6 +79,7 @@ public abstract class EnemyFactory {
 - The main game code (in GameManager) simply requests a factory by name — no new Orc() or new Skeleton() anywhere else.
 Therefore, it is easier to add new enemy types by adding one class. It also keeps the main logic independent of concrete classes.
 
+
 2. Builder:
 
 Simplify complex player creation by separating construction (name, class, stats) from representation. 
@@ -95,26 +96,33 @@ It’s hard to read, easy to mix up, and you’d need new constructors every tim
 public class PlayerBuilder {
     private String name;
     private String playerClass;
-    private int hp, attack, defense;
-    public PlayerBuilder setName(String name) { this.name = name; return this; }
-    public PlayerBuilder setPlayerClass(String playerClass) { this.playerClass = playerClass; return this; }
-    public PlayerBuilder applyClassDefaults() {
-        PlayerStats.Stats stats = PlayerStats.CLASS_STATS.get(playerClass);
-        this.hp = stats.hp;
-        this.attack = stats.attack;
-        this.defense = stats.defense;
-        return this;}
-    public Player build() {return new Player(name, playerClass, hp, attack, defense);}}
+    private int hp;
+    private int attack;
+    private int defense;
+
+    @Override
+    public IBuilder setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    @Override
+    public IBuilder setPlayerClass(String playerClass) {
+        this.playerClass = playerClass;
+        return this;
+    }
+}
 ```
 
 ```java
 public class PlayerDirector {
-    public Player createDefault(String name, String playerClass) {
-        return new PlayerBuilder()
+    public Player createDefault(IBuilder builder, String name, String playerClass) {
+        return builder
             .setName(name)
             .setPlayerClass(playerClass)
             .applyClassDefaults()
-            .build();}}
+            .build();
+    }}
 ```
 - **PlayerDirector** provides reusable templates (e.g., createMage(name)).
 - Encapsulates predefined sequences of construction
