@@ -1,6 +1,7 @@
 package lab1.domain.factory;
+import lab1.domain.combat.IFighter;
 
-public abstract class Enemy {
+public abstract class Enemy implements IFighter {
     protected String name;
     protected int hp;
     protected int attack;

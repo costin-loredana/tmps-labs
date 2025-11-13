@@ -1,6 +1,8 @@
 package lab1.domain.models;
 
-public class Player {
+import lab1.domain.combat.IFighter;
+
+public class Player implements IFighter{
     private String name;
     private String playerClass;
     private int hp;
