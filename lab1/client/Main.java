@@ -1,6 +1,7 @@
 package lab1.client;
 
 import java.util.Scanner;
+
 import lab1.domain.facade.GameFacade;
 
 public class Main {

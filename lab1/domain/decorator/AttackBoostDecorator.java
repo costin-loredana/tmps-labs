@@ -15,4 +15,10 @@ public class AttackBoostDecorator extends FighterDecorator {
     public int getAttack() {
         return super.getAttack() + bonus;
     }
+
+    @Override
+    public String getDescription() {
+        return wrapped.getDescription() + " +AttackBoost(" + bonus + ")";
+    }
 }
+

@@ -16,3 +16,4 @@ public class DefenseBoostDecorator extends FighterDecorator {
         return super.getDefense() + bonus;
     }
 }
+

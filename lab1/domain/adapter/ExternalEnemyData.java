@@ -7,3 +7,4 @@ public class ExternalEnemyData {
     public int defense;
     public String taunt;
 }
+

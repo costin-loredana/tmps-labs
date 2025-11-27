@@ -1,12 +1,15 @@
 package lab1.domain.core;
 
 import lab1.domain.combat.IFighter;
-
-import java.util.Random;
+import lab1.domain.observer.BattleEvent;
+import lab1.domain.observer.Publisher;
 
 public class CombatManager {
+
     private static volatile CombatManager instance;
-    private final Random random = new Random();
+
+    private final Publisher publisher = new Publisher();
+    public Publisher getPublisher() { return publisher; }
 
     private CombatManager() {}
 
@@ -21,34 +24,82 @@ public class CombatManager {
     }
 
     public void battle(IFighter player, IFighter enemy) {
-        System.out.println("\nBattle started between " 
-            + player.getName() + " and " + enemy.getName());
+
+        publisher.notifySubscribers(
+            new BattleEvent(
+                BattleEvent.Type.ROUND_START,
+                null, null, 0,
+                "Battle started between " + player.getName() + " and " + enemy.getName()
+            )
+        );
 
         while (player.isAlive() && enemy.isAlive()) {
-            int damageToEnemy = Math.max(
-                (player.getAttack() - enemy.getDefense()) + random.nextInt(9) - 4, 
-                1
-            );
-            int damageToPlayer = Math.max(
-                (enemy.getAttack() - player.getDefense()) + random.nextInt(9) - 4, 
-                1
-            );
+
+            int damageToEnemy = player.processAttack(enemy);
 
             enemy.takeDamage(damageToEnemy);
-            System.out.println(player.getName() 
-                + " hits " + enemy.getName() + " for " + damageToEnemy + " damage.");
+            publisher.notifySubscribers(
+                new BattleEvent(
+                    BattleEvent.Type.DAMAGE,
+                    player,
+                    enemy,
+                    damageToEnemy,
+                    player.getName() + " hits " + enemy.getName() +
+                    " for " + damageToEnemy + " damage."
+                )
+            );
 
-            if (!enemy.isAlive()) break;
+            if (!enemy.isAlive()) {
+                publisher.notifySubscribers(
+                    new BattleEvent(
+                        BattleEvent.Type.DEATH,
+                        player,
+                        enemy,
+                        0,
+                        enemy.getName() + " has been defeated!"
+                    )
+                );
+                break;
+            }
+
+            int damageToPlayer = enemy.processAttack(player);
 
             player.takeDamage(damageToPlayer);
-            System.out.println(enemy.getName() 
-                + " hits " + player.getName() + " for " + damageToPlayer + " damage.");
+            publisher.notifySubscribers(
+                new BattleEvent(
+                    BattleEvent.Type.DAMAGE,
+                    enemy,
+                    player,
+                    damageToPlayer,
+                    enemy.getName() + " hits " + player.getName() +
+                    " for " + damageToPlayer + " damage."
+                )
+            );
+
+            if (!player.isAlive()) {
+                publisher.notifySubscribers(
+                    new BattleEvent(
+                        BattleEvent.Type.DEATH,
+                        enemy,
+                        player,
+                        0,
+                        player.getName() + " has been defeated!"
+                    )
+                );
+                break;
+            }
+
+            if (player.getState() != null) player.getState().handleTurn();
+            if (enemy.getState() != null) enemy.getState().handleTurn();
         }
 
-        System.out.println("== Battle Over ==");
-        if (player.isAlive())
-            System.out.println(player.getName() + " wins!");
-        else
-            System.out.println(enemy.getName() + " wins!");
+        publisher.notifySubscribers(
+            new BattleEvent(
+                BattleEvent.Type.BATTLE_END,
+                null, null, 0,
+                "Battle ended"
+            )
+        );
     }
+
 }

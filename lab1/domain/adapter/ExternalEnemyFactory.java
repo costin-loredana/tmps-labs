@@ -13,6 +13,7 @@ public class ExternalEnemyFactory extends EnemyFactory {
 
     @Override
     public Enemy createEnemy() {
-        return new JsonEnemyAdapter(data);
+        return new ExternalEnemyAdapter(data);
     }
 }
+

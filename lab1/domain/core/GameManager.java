@@ -8,10 +8,10 @@ import java.util.Scanner;
 import lab1.domain.factory.Enemy;
 import lab1.domain.factory.EnemyFactory;
 import lab1.domain.factory.FactoryInitializer;
+import lab1.domain.models.IBuilder;
 import lab1.domain.models.Player;
 import lab1.domain.models.PlayerBuilder;
 import lab1.domain.models.PlayerDirector;
-import lab1.domain.models.IBuilder;
 
 public class GameManager {
     private static volatile GameManager instance;
@@ -73,3 +73,4 @@ public class GameManager {
         combatManager.battle(player, enemy);
     }
 }
+

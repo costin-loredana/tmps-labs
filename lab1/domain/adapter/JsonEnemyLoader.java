@@ -13,36 +13,37 @@ public class JsonEnemyLoader {
         ExternalEnemyData data = new ExternalEnemyData();
 
         data.name = extractString(json, "name");
-        data.taunt = extractString(json, "taunt");
         data.hp = extractInt(json, "hp");
         data.attack = extractInt(json, "attack");
         data.defense = extractInt(json, "defense");
+        data.taunt = extractString(json, "taunt");
 
         return data;
     }
 
     private String extractString(String json, String key) {
         String pattern = "\"" + key + "\"";
-        int start = json.indexOf(pattern);
-        if (start == -1) return null;
+        int pos = json.indexOf(pattern);
+        if (pos == -1) return "Unknown";
 
-        start = json.indexOf(":", start) + 1;
-        start = json.indexOf("\"", start) + 1;
-        int end = json.indexOf("\"", start);
+        pos = json.indexOf(":", pos) + 1;
+        pos = json.indexOf("\"", pos) + 1;
+        int end = json.indexOf("\"", pos);
 
-        return json.substring(start, end);
+        return json.substring(pos, end);
     }
 
     private int extractInt(String json, String key) {
         String pattern = "\"" + key + "\"";
-        int start = json.indexOf(pattern);
-        if (start == -1) return 0;
+        int pos = json.indexOf(pattern);
+        if (pos == -1) return 0;
 
-        start = json.indexOf(":", start) + 1;
-        int end = json.indexOf(",", start);
-        if (end == -1) end = json.indexOf("}", start);
+        pos = json.indexOf(":", pos) + 1;
 
-        String number = json.substring(start, end).trim();
-        return Integer.parseInt(number);
+        int comma = json.indexOf(",", pos);
+        int end = (comma == -1) ? json.indexOf("}", pos) : comma;
+
+        return Integer.parseInt(json.substring(pos, end).trim());
     }
 }
+

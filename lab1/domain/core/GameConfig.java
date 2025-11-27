@@ -19,5 +19,6 @@ public class GameConfig {
         ENEMY_OPTIONS.put(1, "Goblin");
         ENEMY_OPTIONS.put(2, "Skeleton");
         ENEMY_OPTIONS.put(3, "Orc");
+        ENEMY_OPTIONS.put(4, "Vampire");
     }
 }

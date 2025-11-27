@@ -14,7 +14,14 @@ public class PoisonDecorator extends FighterDecorator {
     @Override
     public void takeDamage(int dmg) {
         wrapped.takeDamage(dmg);
+
+        if (!wrapped.isAlive()) {
+            return;
+        }
+
         wrapped.takeDamage(poisonDamage);
         System.out.println(">> " + wrapped.getName() + " suffers " + poisonDamage + " poison damage!");
     }
+
 }
+

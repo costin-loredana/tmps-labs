@@ -1,0 +1,51 @@
+{
+  "name": "Elder Bloodlord",
+  "species": "Vampire",
+  "rank": "Ancient",
+  "hp": 260,
+  "attack": 45,
+  "defense": 32,
+  "speed": 18,
+  "mana": 120,
+
+  "taunt": "Your heartbeat echoes… I cannot ignore it any longer.",
+
+  "taunts": [
+    "Your blood calls to me...",
+    "You dare stand before an immortal?",
+    "I have feasted for centuries — tonight is no different."
+  ],
+
+  "abilities": {
+    "lifeDrain": {
+      "damage": 25,
+      "heal": 20,
+      "cooldown": 2
+    },
+    "shadowStep": {
+      "dodgeChance": 0.45,
+      "cooldown": 3
+    },
+    "bloodCurse": {
+      "damageOverTime": 4,
+      "duration": 5
+    }
+  },
+
+  "resistances": {
+    "physical": 0.10,
+    "fire": -0.25,
+    "ice": 0.30,
+    "holy": -0.40
+  },
+
+  "weaknesses": [
+    "Holy Light",
+    "Silver Weapons",
+    "Sunlight"
+  ],
+
+  "lore": "Among the oldest of his kind, the Elder Bloodlord once ruled a forgotten kingdom in the northern wastes. His thirst has shaped empires, and his shadow still haunts the ruins of his dark reign.",
+
+  "isBoss": true
+}
