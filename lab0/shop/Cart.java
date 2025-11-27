@@ -1,7 +1,8 @@
 package lab0.shop;
-import lab0.products.Product;
 import java.util.ArrayList;
 import java.util.List;
+
+import lab0.products.Product;
 
 public class Cart {
     private final List<CartItem> items = new ArrayList<>();

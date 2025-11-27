@@ -21,7 +21,7 @@ public class Meat implements Product {
         System.out.printf("%s (%s) - $%.2f per kg%n",
                 getName(), type.getCategory().getDisplayName(), getPricePerKg());
     }
-    //do we need to add this method here?
+    
     public MeatCategory getCategory() {
         return type.getCategory();
     }

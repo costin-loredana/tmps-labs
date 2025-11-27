@@ -57,7 +57,7 @@ public class Main {
                     System.out.println("Invalid choice. Please try again.");
                     continue;
             }
-
+            //not good not open/closed
             boolean choosingProduct = true;
             while (choosingProduct) {
                 System.out.print("\nEnter product number to buy (0 to go back): ");

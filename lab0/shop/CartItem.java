@@ -1,5 +1,7 @@
 package lab0.shop;
+
 import lab0.products.Product;
+
 public class CartItem {
     private final Product product;
     private final double kg;
